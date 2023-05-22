@@ -1,7 +1,6 @@
 import React from 'react'
 import Hero from '../components/Hero'
 import Repos from '../components/Repos'
-import gitHubCurriculum from '../utils/gitHubCurriculum'
 import Footer from '../components/Footer'
 import Separtor from '../components/Separtor'
 
@@ -19,11 +18,8 @@ const App = ({user, repos}) => {
 
 export async function getServerSideProps(context) {
 
-    const {repos, user} = await gitHubCurriculum({
-        username: 'materiaescura',
-        hiddenRepositories:['materiaescura']
-    })
-   
+    const request = await fetch(process.env.API_URL+'/api/getUser')
+    const {repos, user} = await request.json()
     return {
         props: {
             repos,
